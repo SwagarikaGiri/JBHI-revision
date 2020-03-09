@@ -8,7 +8,8 @@ from numpy import array
 #only that with pdbid
 pdb_id_file='JBHI_all_accession_no_with_pdbid.csv'
 # all in deepgo
-accession_no_file='JBHI_all_accession_no_without_header.csv'
+# accession_no_file='JBHI_all_accession_no_without_header.csv'
+accession_no_file='JBHI_all_accession_no.csv'
 output_file='JBHI_accession_no_with_status.csv'
 
 
@@ -28,6 +29,7 @@ def generate_accession_no_status_code_pickle():
             pdbid_status.append(False)
     status=np.array(pdbid_status)
     accession=df1['accession_no'].values
+    index=df1['accession_no'].values
     bp=df1['bp'].values
     mf=df1['mf'].values
     cc=df1['cc'].values
@@ -36,8 +38,9 @@ def generate_accession_no_status_code_pickle():
         'bp': bp,
         'cc':cc,
         'mf':mf,
-        'status':status})
-    # res_df.to_pickle('AccessionNumberStatusFile'+ '.pkl')
+        'status':status,'index':index})
+    res_df=res_df.set_index('index')
+    res_df.to_pickle('AccessionNumberStatusFileWithAccessionIndex'+ '.pkl')
     print res_df
 
 
@@ -74,6 +77,6 @@ def generate_status_csv():
 
 
 if __name__ == '__main__':
-    # generate_accession_no_status_code_pickle()
-    generate_status_csv()
+    generate_accession_no_status_code_pickle()
+    # generate_status_csv()
 
